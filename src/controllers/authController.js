@@ -4,10 +4,8 @@ const {
   findUserByEmailAndComparePasswordPostgres,
 } = require("../models/user-postgres");
 
-// Chave secreta para assinar os tokens (guarde isso em um arquivo .env!)
 const JWT_SECRET = "seu-segredo-super-secreto";
 
-// Endpoint para registro de novo usuário
 const register = async (req, res) => {
   const { email, password } = req.body;
 
@@ -28,7 +26,6 @@ const register = async (req, res) => {
   }
 };
 
-// Endpoint para login de usuário
 const login = async (req, res) => {
   const { email, password } = req.body;
 
@@ -46,7 +43,6 @@ const login = async (req, res) => {
       return res.status(401).json({ message: "Credenciais inválidas." });
     }
 
-    // Se a autenticação for bem-sucedida, gere um token JWT
     const token = jwt.sign({ email: email }, JWT_SECRET, { expiresIn: "1h" });
 
     res.status(200).json({ message: "Login bem-sucedido!", token });

@@ -6,7 +6,7 @@ const client = new Client({
   host: "localhost",
   database: "auth_db",
   password: "password",
-  port: 5455, // Altere para a nova porta
+  port: 5455,
 });
 
 async function connectToPostgres() {
@@ -25,7 +25,6 @@ async function connectToPostgres() {
   }
 }
 
-// Criptografa a senha antes de salvar
 async function createUserPostgres(email, password) {
   const salt = await bcrypt.genSalt(10);
   const passwordHash = await bcrypt.hash(password, salt);
@@ -36,7 +35,6 @@ async function createUserPostgres(email, password) {
   return res.rows[0].id;
 }
 
-// Compara a senha informada com a senha criptografada
 async function findUserByEmailAndComparePasswordPostgres(email, password) {
   const query = "SELECT password_hash FROM users WHERE email = $1;";
   const res = await client.query(query, [email]);
